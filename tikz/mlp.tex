@@ -1,0 +1,105 @@
+\documentclass[tikz,border=5]{standalone}
+\RequirePackage{luatex85}
+
+\input{/net/vol/boeddeker/deploy/cbj/cbj/viz/tikz_header.tex}
+
+% \usepackage[decimalsymbol=comma, expproduct=times]{siunitx}
+\usepackage[expproduct=times]{siunitx}
+\usepackage[]{amsmath}
+
+
+\newcommand{\vect}[1]{\ensuremath{\boldsymbol{\mathbf{#1}}}}
+\newcommand{\ReLU}{\mathrm{ReLU}}
+
+\begin{document}
+\begin{tikzpicture}[x=3em, y=3em, scale=1]
+\input{/net/vol/boeddeker/deploy/cbj/cbj/viz/tikz_styles.tex}
+\tikzstyle{block}=[draw,text centered, text width=5em, minimum height=4ex] % rectangle
+\tikzstyle{gradblock}=[draw,text centered, text width=8em, minimum height=4ex] % rectangle
+
+\tikzstyle{fitbox}=[draw=black!50!white, line width=1pt,
+		dashed,
+%		dash pattern=on 1pt off 4pt on 6pt off 4pt,
+		inner sep=1mm, rectangle, rounded corners];
+
+\node[cross,draw,circle] at (0, 0) (times1) {};
+\node[align=center,above] at (0, 1) (x) {Feature\\$\vect{x}$};
+\draw[arrow] (x) -- (times1);
+\node[] at (-1, 0) (W1) {$\vect{W}_1$};
+\draw[arrow] (W1) -- (times1);
+
+\node[plus,draw,circle] at (0, -1) (plus1) {};
+\node[] at (-1, -1) (b1) {$\vect{b}_1$};
+\draw[arrow] (times1) -- node[left]{$\vect{h}_1$} (plus1);
+\draw[arrow] (b1) -- (plus1);
+
+\node[fit=(W1)(b1)(times1)(plus1), fitbox] (ff1) {};
+\node[left of=eft,align=left] at (ff1.west) (ff1text) {Linear\\layer};
+
+\node[block] at (-0.5, -2.5) (relu) {$\ReLU$};
+\draw[arrow] (plus1) -- node[left]{$\vect{h}_2$} (relu.north -| plus1);
+
+\begin{scope}[shift={(0,-2)}]
+	\node[cross,draw,circle] at (0, -2) (times2) {};
+	\draw[arrow] (relu.south -| times2) -- node[left]{$\vect{h}_3$} (times2);
+	\node[] at (-1, -2) (W2) {$\vect{W}_2$};
+	\draw[arrow] (W2) -- (times2);
+	
+	\node[plus,draw,circle] at (0, -3) (plus2) {};
+	\node[] at (-1, -3) (b2) {$\vect{b}_2$};
+	\draw[arrow] (times2) --  node[left]{$\vect{h}_4$} (plus2);
+	\draw[arrow] (b2) -- (plus2);
+	
+	\node[fit=(W2)(b2)(times2)(plus2), fitbox] (ff2) {};
+	\node[left of=eft,align=left] at (ff2.west) (ff2text) {Linear\\layer};
+	
+	\node[block] at (-0.5, -4.5) (softmax) {$\mathrm{Softmax}$};
+	\draw[arrow] (plus2) -- node[left]{$\vect{h}_5$} (softmax.north -| plus1);
+	
+	\node[below,align=center] at (0, -5.1) (prediction) {Prediction\\$\hat{y}$};
+	\draw[arrow] (softmax.south -| prediction) -- (prediction);
+	
+	\node[block] at ($(prediction.south-|relu) + (0, -0.5)$) (bce) {$\mathrm{BCE}$};
+	\draw[arrow] (prediction) -- (bce.north -| prediction);
+	
+	\node[align=center] at ($(bce.south -| prediction) + (0, -1)$) (loss) {Loss\\$J$};
+	\draw[arrow] (bce.south -| loss) -- (loss);
+	
+\end{scope}
+
+
+\node[fit=(ff1)(ff2)(ff1text)(ff2text)(softmax), fitbox] (model) {};
+\node[above right] at (model.north west) {Model};
+
+
+\coordinate (grad) at (3, 0);
+
+\node[gradblock] at (bce -| grad) (bcegrad) {$\frac{\partial J}{\partial \hat{y}} = \frac{\partial J}{\partial J} \dots$};
+\node[gradblock] at (softmax -| grad) (softmaxgrad) {$\frac{\partial J}{\partial \vect{h}_5} = \frac{\partial J}{\partial \hat{y}} \dots$};
+\node[gradblock] at (plus2 -| grad) (plus2grad) {$\frac{\partial J}{\partial \vect{h}_4} = \frac{\partial J}{\partial \vect{h}_5} \dots$};
+\node[gradblock, anchor=west] at ($(plus2grad.east) + (0.5, 0)$) (plus2grad2) {$\frac{\partial J}{\partial b_2} = \frac{\partial J}{\partial \vect{h}_5} \dots$};
+\node[gradblock] at (times2 -| grad) (times2grad) {$\frac{\partial J}{\partial \vect{h}_3} = \frac{\partial J}{\partial \vect{h}_4} \dots$};
+\node[gradblock, anchor=west] at ($(times2grad.east) + (0.5, 0)$) (times2grad2) {$\frac{\partial J}{\partial W_2} = \frac{\partial J}{\partial \vect{h}_4} \dots$};
+\node[gradblock] at (relu -| grad) (relugrad) {$\frac{\partial J}{\partial \vect{h}_2} = \frac{\partial J}{\partial \vect{h}_3} \dots$};
+
+\node[gradblock] at (plus1 -| grad) (plus1grad) {$\frac{\partial J}{\partial \vect{h}_1} = \frac{\partial J}{\partial \vect{h}_2} \dots$};
+\node[gradblock, anchor=west] at ($(plus1grad.east) + (0.5, 0)$) (plus1grad2) {$\frac{\partial J}{\partial b_1} = \frac{\partial J}{\partial \vect{h}_2} \dots$};
+\node[gradblock] at (times1 -| grad) (times1grad) {$\frac{\partial J}{\partial \vect{x}} = \frac{\partial J}{\partial \vect{h}_1} \dots$};
+\node[gradblock, anchor=west] at ($(times1grad.east) + (0.5, 0)$) (times1grad2) {$\frac{\partial J}{\partial W_1} = \frac{\partial J}{\partial \vect{h}_1} \dots$};
+
+\draw[arrow] (bcegrad) -- (softmaxgrad);
+\draw[arrow] (softmaxgrad) -- (plus2grad);
+\draw[arrow] (softmaxgrad) -- (plus2grad2);
+\draw[arrow] (plus2grad) -- (times2grad);
+\draw[arrow] (plus2grad) -- (times2grad2);
+\draw[arrow] (times2grad) -- (relugrad);
+\draw[arrow] (relugrad) -- (plus1grad);
+\draw[arrow] (relugrad) -- (plus1grad2);
+\draw[arrow] (plus1grad) -- (times1grad);
+\draw[arrow] (plus1grad) -- (times1grad2);
+
+\node[fit=(bcegrad)(softmaxgrad)(plus2grad)(plus2grad2)(plus2grad)(times2grad)(times2grad2)(relugrad)(plus1grad)(plus1grad2)(times1grad)(times1grad2), fitbox] (backward) {};
+\node[above] at (backward.north) {Backward};
+
+\end{tikzpicture}
+\end{document}
