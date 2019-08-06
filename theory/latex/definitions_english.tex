@@ -1,0 +1,85 @@
+\NeedsTeXFormat{LaTeX2e}
+\documentclass[11pt, a4paper, DIV12, BCOR0mm, headinclude , oneside]{scrartcl}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{ifthen}
+\usepackage{multicol}
+\usepackage{standalone}
+
+\usepackage{enumitem}
+\renewcommand{\theenumi}{(\alph{enumi})} % Style of references to enumerate items
+\usepackage{color}
+\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{siunitx}
+%\usepackage{minted}
+\usepackage{standalone}
+
+% Collections
+\input{latex/upb_colors.tex}
+\input{latex/tikz_imports.tex}
+\input{latex/solution_environment.tex}
+
+% Commands
+\newcommand{\Datum}{\today}
+\newcommand{\Vorlesung}{Statistical and Machine Learning}
+\newcommand{\CopyrightJahr}{2018}
+\newcommand{\EMail}{drude@nt.upb.de}
+\newcommand{\AnzahlAnAufgaben}{1}
+\newcommand{\mysubtitle}{Exercises}
+\newcommand{\thesisauthor}{M.Sc. Lukas Drude}
+\newcommand{\thesisdate}{\today}
+\newcommand{\fullname}{M.Sc. Lukas Drude}
+\newcommand{\university}{Paderborn University}
+\newcommand{\department}{Communications Engineering}
+\newcommand{\rfootlabel}{Solutions}
+\newcommand{\lfootlabel}{Solutions}
+
+\renewcommand{\Pr}{\mathrm{Pr}}
+\newcommand{\T}{\mathsf{T}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\newcommand{\Uebunghilfe}[1]{{\vfill\hrulefill\\Hint:\\[-2\baselineskip]{#1}}}
+
+\newcommand{\Hinweis}{Achten Sie bei Skizzen auf die korrekte und vollständige Beschriftung der Achsen und markanter Punkte!}
+
+% Header and footer
+\lhead{\includegraphics[height=8mm]{latex/upb_logo_rgb_09.pdf}}
+\rhead{\tiny\input{latex/nt_logo.tex}}
+\lfoot{Exercise: \Vorlesung, \Datum}
+\cfoot{}
+\rfoot{\thepage}
+
+% Page layout
+\raggedbottom
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{0}
+\setcounter{totalnumber}{4}
+
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{-5mm}
+\setlength{\textwidth}{165mm}
+\setlength{\topmargin}{-10mm}
+\setlength{\textheight}{235mm}
+\setlength{\headheight}{10mm}
+\setlength{\parindent}{0pt}
+
+\pagestyle{fancy}

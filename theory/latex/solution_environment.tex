@@ -1,0 +1,33 @@
+% Usage:
+% \def\issolution{1}
+%
+% \begin{solution}
+%     $a = 42$
+% \end{solution}
+%
+% If the "issolution" variable is not defined, the solution will not appear.
+\usepackage[framemethod=tikz]{mdframed}
+
+\usepackage{comment}
+\ifdefined\issolution
+    \newenvironment{solution}
+    {
+    \par\noindent\normalfont\textbf{Solution}\par\nopagebreak%
+        \begin{mdframed}[
+            linewidth=1pt,
+            linecolor=black,
+            bottomline=false,
+            topline=false,rightline=false,
+            innerrightmargin=0pt,
+            innertopmargin=0pt,
+            innerbottommargin=0pt,
+            innerleftmargin=1em,
+            skipabove=.5\baselineskip
+        ]
+    }
+    {
+        \end{mdframed}
+    }
+\else
+\excludecomment{solution}
+\fi

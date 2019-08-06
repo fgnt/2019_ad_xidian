@@ -1,0 +1,7 @@
+\begin{tikzpicture}
+\node [fill=blue, text=white, text width=20em, text depth=1em, align=left] (upper) {\textsf{Institut Elektrotechnik und Informationstechnik}};
+\node [fill=white, text=black, text depth=-0.1em] (lower) at ($(upper)+(5em,-0.75em)$) {\textbf{\textsf{Nachrichtentechnik}}~~~~\textsf{Prof. Dr.-Ing. Reinhold Häb-Umbach}};
+\begin{scope}[on background layer]
+\node [fill=blue, fit=(lower), inner sep=0.1em, xshift=0.15em, yshift=-0.15em] (fit) {};
+\end{scope}
+\end{tikzpicture}% Trailing comment to avoid whitespace.
