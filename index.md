@@ -10,6 +10,9 @@ In this project we want to take a closer look how these gradients are obtained.
 To follow the project it is not nessesary to know neuronal networks (NN), 
 but the motivation will be most of the time come from NN.
 
+Prerequisites: Solid Python knowledge including NumPy
+Knowledge about neuronal networks is not a requirement.
+
 ## (Stochastic) gradient decent
 
 Gradient decent is an algorithm that minimizes a cost function given some parameters.
@@ -36,7 +39,6 @@ With a sufficient small learning rate and enough iterations the parameters will 
 For the linear least squares problem is the gradient decent algorithm not recommented, because there exists a closed form solution.
 The advantage of gradiend decent is, that you can calculate the gradient also for cost functions, where no closed form solution is known.
 So gradient decent works for much more cost functions.
-
 
 ## Chain rule
 
