@@ -15,18 +15,20 @@ but the motivation will be most of the time come from NN.
 Gradient decent is an algorithm that minimizes a cost function given some parameters.
 For example the cost function of linear least squares:
 $$
-    J^{\mathrm{Linear Least Squares}} = \sum_n (y_n - \hat y_n)^2 = \sum_n (y_n - {\bf x}^T\boldsymbol{\theta})^2
+    J^{\mathrm{Linear Least Squares}} = \sum_n (y_n - \hat y_n)^2 = \sum_n (y_n - {\mathbf{x}}^T\boldsymbol{\theta})^2
 $$
-where $y_n$ is the True values, $\hat y_n$ the estimate, ${\bf x}$ the observation and $\boldsymbol{\theta}$ are the learnable parameters. Node bold symbols (e.g. $\mathbf{x}$) indicate vectors and non bold symbold scalars (e.g. $x$).
+where $y_n$ is the True values, $\hat y_n$ the estimate, ${\mathbf{x}}$ the observation and $\boldsymbol{\theta}$ are the learnable parameters. Node bold symbols (e.g. $\mathbf{x}$) indicate vectors and non bold symbold scalars (e.g. $x$).
 
 Also this function has a closed form solution, we can apply the gradient decent algorithm
 $$
-    \boldsymbol{\theta}^{\mathrm{new}} = \boldsymbol{\theta}^{\mathrm{old}} - \mu \frac{\partial J}{\partial \boldsymbol{\theta}}\bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}} = 
-    \boldsymbol{\theta}^{\mathrm{old}} - \mu \begin{bmatrix} 
+    \boldsymbol{\theta}^{\mathrm{new}}
+    = \boldsymbol{\theta}^{\mathrm{old}} - \mu \frac{\partial J}{\partial \boldsymbol{\theta}}\bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}} 
+    = \boldsymbol{\theta}^{\mathrm{old}} - \mu
+    \begin{bmatrix} 
         \frac{\partial J}{\partial \theta_0} \\
         \frac{\partial J}{\partial \theta_1}
-    \end{bmatrix}\bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}}
-    
+    \end{bmatrix}
+    \bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}}
 $$
 So we start with an value for $\boldsymbol{\theta}^{\mathrm{old}}$, calculate the gradient of the cost function w.r.t. each parameter and substract the the gradient from the old value with a learnung rate $\mu$.
 With a sufficient small learning rate and enough iterations the parameters will converge to the optimal parameters.
@@ -93,6 +95,7 @@ $$
             \frac{\partial h}{\partial \boldsymbol{\theta}}
         \right)
 $$
+
 ## Reverse mode
 
 $$
