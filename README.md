@@ -1,9 +1,9 @@
 
 # Introduction
- https://boeddeker.github.io/2019_ad_xidian/ 
+ https://fgnt.github.io/2019_ad_xidian/ 
 
 # Theoretical exercise
- https://github.com/boeddeker/2019_ad_xidian/blob/master/theory/exercise.pdf
+ https://github.com/fgnt/2019_ad_xidian/blob/master/theory/exercise.pdf
 
 # Practical exercise
 Start a jupyter notebook server in the poolroom:
@@ -22,7 +22,7 @@ Numpy cheat sheet: https://git.cs.upb.de/chthiel/python-tutorial/blob/master/che
 ## Download the exercise:
 Download the git repository
 ```bash
-git clone https://github.com/boeddeker/2019_ad_xidian.git
+git clone https://github.com/fgnt/2019_ad_xidian.git
 ```
 Now you can find in your home directory a notebook to start the exercise
 (`~/2019_ad_xidian/practice/ad_template.ipynb`) and a python script that contains some helper functions (`~/2019_ad_xidian/practice/ad_helper.py`).
