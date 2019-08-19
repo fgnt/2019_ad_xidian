@@ -19,7 +19,7 @@ Gradient decent is an algorithm that minimizes a cost function given some parame
 Take for example the cost function of linear least squares:
 $$
     J^{\mathrm{Linear Least Squares}} = \sum_n (y_n - \hat y_n)^2 = \sum_n (y_n - {\mathbf{x_n}}^T\boldsymbol{\theta})^2
-$$$
+$$
 where $y_n$ are the true values, $\hat y_n$ the estimates, ${\mathbf{x_n}}$ the observations and $\boldsymbol{\theta}$ are the learnable parameters.
 Note that bold symbols (e.g. $\mathbf{x}$) indicate vectors while non-bold symbols indicate scalars (e.g. $x$).
 
@@ -49,10 +49,10 @@ $$
    J = f(\hat y),\quad \hat y = g(\theta)
 $$
 $$
-   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \theta}
+   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \boldsymbol{\theta}}
 $$
 
-## Algorithmic Differentiation
+## Algorithmic differentiation
 
 > In mathematics and computer algebra, automatic differentiation (AD), 
 > also called algorithmic differentiation or computational differentiation,[1][2] 
