@@ -1,28 +1,29 @@
 # Algorithmic differentiation for machine learning
-or one of the reasons, why neuronal networks got so popular.
+#### or one of the reasons why neural networks got so popular.
 
-Training neuronal networks (NN) is usually done with stochastic gradient decent (SGD) or an advanced version of SGD with momentum etc. (e.g. Adam).
+Training neural networks (NN) is usually done with stochastic gradient decent (SGD) or an advanced version of SGD with momentum etc. (e.g. Adam).
 In frameworks there is an abstraction for the gradient calculation.
 It is sufficient, when the user defines how the loss is calculated
 and the framework does the calculation of the gradients.
 
-In this project we want to take a closer look how these gradients are obtained.
-To follow the project it is not nessesary to know neuronal networks (NN), 
-but the motivation will be most of the time come from NN.
+In this project we want to take a closer look into how these gradients are obtained.
+To follow the project it is not necessary to know neural networks (NN), 
+but the motivation will be drawn from NNs most of the time.
 
 Prerequisites: Solid Python knowledge including NumPy
-Knowledge about neuronal networks is not a requirement.
+Knowledge about neural networks is not a requirement.
 
 ## (Stochastic) gradient decent
 
 Gradient decent is an algorithm that minimizes a cost function given some parameters.
-For example the cost function of linear least squares:
+Take for example the cost function of linear least squares:
 $$
-    J^{\mathrm{Linear Least Squares}} = \sum_n (y_n - \hat y_n)^2 = \sum_n (y_n - {\mathbf{x}}^T\boldsymbol{\theta})^2
-$$
-where $y_n$ is the True values, $\hat y_n$ the estimate, ${\mathbf{x}}$ the observation and $\boldsymbol{\theta}$ are the learnable parameters. Node bold symbols (e.g. $\mathbf{x}$) indicate vectors and non bold symbold scalars (e.g. $x$).
+    J^{\mathrm{Linear Least Squares}} = \sum_n (y_n - \hat y_n)^2 = \sum_n (y_n - {\mathbf{x_n}}^T\boldsymbol{\theta})^2
+$$$
+where $y_n$ are the true values, $\hat y_n$ the estimates, ${\mathbf{x_n}}$ the observations and $\boldsymbol{\theta}$ are the learnable parameters.
+Note that bold symbols (e.g. $\mathbf{x}$) indicate vectors while non-bold symbols indicate scalars (e.g. $x$).
 
-Also this function has a closed form solution, we can apply the gradient decent algorithm
+Although this function has a closed form solution, we can apply the gradient decent algorithm
 $$
     \boldsymbol{\theta}^{\mathrm{new}}
     = \boldsymbol{\theta}^{\mathrm{old}} - \mu \frac{\partial J}{\partial \boldsymbol{\theta}}\bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}} 
@@ -33,25 +34,25 @@ $$
     \end{bmatrix}
     \bigg|_{\boldsymbol{\theta}=\boldsymbol{\theta}^{\mathrm{old}}}
 $$
-So we start with an value for $\boldsymbol{\theta}^{\mathrm{old}}$, calculate the gradient of the cost function w.r.t. each parameter and substract the the gradient from the old value with a learnung rate $\mu$.
+So we start with a value for $\boldsymbol{\theta}^{\mathrm{old}}$, calculate the gradient of the cost function w.r.t. each parameter and subtract the gradient from the old value with a learning rate $\mu$.
 With a sufficient small learning rate and enough iterations the parameters will converge to the optimal parameters.
 
-For the linear least squares problem is the gradient decent algorithm not recommented, because there exists a closed form solution.
-The advantage of gradiend decent is, that you can calculate the gradient also for cost functions, where no closed form solution is known.
-So gradient decent works for much more cost functions.
+For the linear least squares problem is the gradient decent algorithm not recommended, because there exists a closed form solution.
+The advantage of gradient decent is that one can calculate the gradient even for cost functions where no closed form solution is known.
+Therefore gradient decent works for much more cost functions.
 
 ## Chain rule
 
-The most important derivative rule in the project is the chain rule:
+The most important derivation rule in this project is the chain rule:
 
 $$
    J = f(\hat y),\quad \hat y = g(\theta)
-$$
+$$$
 $$
    \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \boldsymbol{\theta}}
-$$
+$$$
 
-## Algorithmic differentation
+## Algorithmic Differentiation
 
 > In mathematics and computer algebra, automatic differentiation (AD), 
 > also called algorithmic differentiation or computational differentiation,[1][2] 
@@ -88,7 +89,7 @@ $$
 
 $$
    J = f(\hat y),\quad \hat y = g(h),\quad h = e(\theta)
-$$
+$$$
 $$
    \frac{\partial J}{\partial \theta} = 
         \frac{\partial J}{\partial \hat y}
@@ -96,13 +97,13 @@ $$
             \frac{\partial \hat y}{\partial h}
             \frac{\partial h}{\partial \boldsymbol{\theta}}
         \right)
-$$
+$$$
 
 ## Reverse mode
 
 $$
    J = f(\hat y),\quad \hat y = g(h),\quad h = e(\theta)
-$$
+$$$
 $$
    \frac{\partial J}{\partial \theta} = 
         \left(
@@ -110,7 +111,7 @@ $$
             \frac{\partial \hat y}{\partial h}
         \right)
         \frac{\partial h}{\partial \boldsymbol{\theta}}
-$$
+$$$
 
 ## NN example
 
