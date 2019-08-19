@@ -49,10 +49,10 @@ $$
    J = f(\hat y),\quad \hat y = g(\theta)
 $$
 $$
-   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \boldsymbol{\theta}}
+   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \theta}
 $$
 
-## Algorithmic differentiation
+## Algorithmic Differentiation
 
 > In mathematics and computer algebra, automatic differentiation (AD), 
 > also called algorithmic differentiation or computational differentiation,[1][2] 
