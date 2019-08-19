@@ -138,7 +138,7 @@ $$
    J = f(\hat y),\quad \hat y = g(h, \theta)
 $$
 $$
-   \frac{\partial J}{\partial \theta} = 
+   \frac{\partial J}{\partial i} = 
        \underbrace{
             \frac{\partial J}{\partial \hat y}
             \underbrace{\left(
