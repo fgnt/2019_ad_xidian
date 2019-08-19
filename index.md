@@ -47,10 +47,10 @@ The most important derivation rule in this project is the chain rule:
 
 $$
    J = f(\hat y),\quad \hat y = g(\theta)
-$$$
 $$
-   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \boldsymbol{\theta}}
-$$$
+$$
+   \frac{\partial J}{\partial \theta} = \frac{\partial J}{\partial \hat y}\frac{\partial \hat y}{\partial \theta}
+$$
 
 ## Algorithmic Differentiation
 
@@ -89,30 +89,79 @@ $$$
 
 $$
    J = f(\hat y),\quad \hat y = g(h),\quad h = e(\theta)
-$$$
+$$
 $$
    \frac{\partial J}{\partial \theta} = 
-        \frac{\partial J}{\partial \hat y}
-        \left(
-            \frac{\partial \hat y}{\partial h}
-            \frac{\partial h}{\partial \boldsymbol{\theta}}
-        \right)
-$$$
+       \underbrace{
+            \frac{\partial J}{\partial \hat y}
+            \underbrace{\left(
+                \frac{\partial \hat y}{\partial h}
+                \frac{\partial h}{\partial \theta}
+            \right)}_{\displaystyle \dot{\hat{y}}}
+       }_{\displaystyle \dot{J}}
+$$
+$\dot{J}$ (output gradient) can be calculated from:
+ - $J$ (output), 
+ - $\hat{y}$ (input) and 
+ - $\dot{\hat{y}}$ (input gradient)
+
+So the calculation of $\dot{J}$ does not directly depend on the input $\theta$.
 
 ## Reverse mode
 
 $$
    J = f(\hat y),\quad \hat y = g(h),\quad h = e(\theta)
-$$$
+$$
 $$
    \frac{\partial J}{\partial \theta} = 
-        \left(
-            \frac{\partial J}{\partial \hat y}
-            \frac{\partial \hat y}{\partial h}
-        \right)
-        \frac{\partial h}{\partial \boldsymbol{\theta}}
-$$$
+        \underbrace{
+            \underbrace{\left(
+                \frac{\partial J}{\partial \hat y}
+                \frac{\partial \hat y}{\partial h}
+            \right)}_{\displaystyle \bar{h}}
+            \frac{\partial h}{\partial \theta}
+        }_{\displaystyle \bar{\theta}}
+$$
+$\bar{\theta}$ (input gradient) can be calculated from:
+ - $\theta$ (input), 
+ - $h$ (output) and 
+ - $\bar{h}$ (output gradient)
 
+So the calculation of $\bar{\theta}$ does not directly depend on the loss $J$.
+
+Note the different notation between forward and reverse mode:
+ - Forward mode: $\dot{h} = \dfrac{\partial h}{\partial \theta}$
+ - Reverse mode: $\bar{\theta} = \dfrac{\partial J}{\partial h}$
+
+## Forward mode: multi input:
+$$
+   J = f(\hat y),\quad \hat y = g(h, \theta)
+$$
+$$
+   \frac{\partial J}{\partial \theta} = 
+       \underbrace{
+            \frac{\partial J}{\partial \hat y}
+            \underbrace{\left(
+                \frac{\partial \hat y}{\partial h}
+                \underbrace{
+                    \frac{\partial h}{\partial i}
+                }_{\displaystyle\dot{h}_{\mathrm{seed}}}
+                +
+                \frac{\partial \hat y}{\partial \theta}
+                \underbrace{
+                    \frac{\partial \theta}{\partial i}
+                }_{\displaystyle\dot{\theta}_{\mathrm{seed}}}
+            \right)}_{\displaystyle \dot{\hat{y}}}
+       }_{\displaystyle \dot{J}}
+$$
+
+In case of multiple inputs we use seed values for the inputs to indicate in which derivative we are interested:
+ - $\dot{h}_{\mathrm{seed}} = 1, \quad \dot{\theta}_{\mathrm{seed}} = 0$ 
+   - -> $\dot{J} = \frac{\partial J}{\partial h}$ 
+ - $\dot{h}_{\mathrm{seed}} = 0, \quad \dot{\theta}_{\mathrm{seed}} = 1$
+   - -> $\dot{J} = \frac{\partial J}{\partial \theta}$
+ - $\dot{h}_{\mathrm{seed}} = 1, \quad \dot{\theta}_{\mathrm{seed}} =  1$
+   - -> $\dot{J} = ?$
 ## NN example
 
 ```python
