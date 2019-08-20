@@ -27,7 +27,10 @@ git clone https://github.com/fgnt/2019_ad_xidian.git
 Now you can find in your home directory a notebook to start the exercise
 (`~/2019_ad_xidian/practice/ad_template.ipynb`) and a python script that contains some helper functions (`~/2019_ad_xidian/practice/ad_helper.py`).
 
-
+Alternative:
+Open 
+https://raw.githubusercontent.com/fgnt/2019_ad_xidian/master/practice/ad_template.ipynb
+in a browser and safe the file.
 
 # Final task
 
