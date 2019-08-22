@@ -181,9 +181,3 @@ optimizer(model.variables, gradients)
 ```
 
 ![tikz/mlp.svg](tikz/mlp.svg)
-
-
-
-
-
-
