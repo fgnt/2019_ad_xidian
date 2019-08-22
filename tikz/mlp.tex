@@ -34,7 +34,7 @@
 \draw[arrow] (b1) -- (plus1);
 
 \node[fit=(W1)(b1)(times1)(plus1), fitbox] (ff1) {};
-\node[left of=eft,align=left] at (ff1.west) (ff1text) {Linear\\layer};
+\node[left of=eft,align=left] at (ff1.west) (ff1text) {Affine\\layer};
 
 \node[block] at (-0.5, -2.5) (relu) {$\ReLU$};
 \draw[arrow] (plus1) -- node[left]{$\vect{h}_2$} (relu.north -| plus1);
@@ -51,7 +51,7 @@
 	\draw[arrow] (b2) -- (plus2);
 	
 	\node[fit=(W2)(b2)(times2)(plus2), fitbox] (ff2) {};
-	\node[left of=eft,align=left] at (ff2.west) (ff2text) {Linear\\layer};
+	\node[left of=eft,align=left] at (ff2.west) (ff2text) {Affine\\layer};
 	
 	\node[block] at (-0.5, -4.5) (softmax) {$\mathrm{Softmax}$};
 	\draw[arrow] (plus2) -- node[left]{$\vect{h}_5$} (softmax.north -| plus1);
@@ -59,11 +59,13 @@
 	\node[below,align=center] at (0, -5.1) (prediction) {Prediction\\$\hat{y}$};
 	\draw[arrow] (softmax.south -| prediction) -- (prediction);
 	
-	\node[block] at ($(prediction.south-|relu) + (0, -0.5)$) (bce) {$\mathrm{BCE}$};
+	\node[block] at ($(prediction.south-|relu) + (0, -0.5)$) (bce) {$\mathrm{CE}$};
 	\draw[arrow] (prediction) -- (bce.north -| prediction);
+	\draw[arrow] ($(bce.west) + (-0.6, 0)$) node[left]{$y$} -- (bce);
 	
 	\node[align=center] at ($(bce.south -| prediction) + (0, -1)$) (loss) {Loss\\$J$};
 	\draw[arrow] (bce.south -| loss) -- (loss);
+
 	
 \end{scope}
 
